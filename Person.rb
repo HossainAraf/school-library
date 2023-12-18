@@ -2,10 +2,11 @@
 
 class Person
   attr_accessor :id, :name, :age
-  def initialize( id, name: 'Unknown', age, parent_permission: true )
+  def initialize(id, name: 'Unknown', age, parent_permission: true)
     @id = id
     @name = name
     @age = age
+    @parent_permission = parent_permission
   end
 
   #setter method
@@ -33,5 +34,4 @@ class Person
         return false
       end
     end
-
 end
