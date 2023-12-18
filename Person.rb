@@ -13,6 +13,15 @@ class Person
     @name = name
   end
 
-  def age = (age)
+  def age=(age)
     @age = age
   end
+
+  def of_age?
+    @age >= 18
+      return true
+    else
+      return false
+    end
+
+end
