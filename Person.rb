@@ -7,4 +7,12 @@ class Person
     @name = name
     @age = age
   end
-  
+
+  #setter method
+  def name=(name)
+    @name = name
+  end
+
+  def age = (age)
+    @age = age
+  end
