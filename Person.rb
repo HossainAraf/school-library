@@ -1,37 +1,23 @@
-# create class Person
-
 class Person
-  attr_accessor :id, :name, :age
-  def initialize(id, name: 'Unknown', age, parent_permission: true)
-    @id = id
-    @name = name
+  attr_accessor :name, :age
+  attr_reader :id
+
+  def initialize(age, name = 'Unknown', parent_permission: true)
+    @id = Randaom.rand(1..1000)
     @age = age
+    @name = name
     @parent_permission = parent_permission
   end
 
-  #setter method
-  def name=(name)
-    @name = name
-  end
+  # Private method to check age
+  private
 
-  def age=(age)
-    @age = age
-  end
-
-  #Private method to check age
   def of_age?
-    @age >= 18
-      return true
-    else
-      return false
-    end
+    true if @age >= 18
+  end
 
-#Public method for if person is of age or if they have permission from parents
-    def can_use_services?
-      if @age >= 18 || @parent_permission == true
-        return true
-      else
-        return false
-      end
-    end
+  # Public method for if person is of age or if they have permission from parents
+  def can_use_services?
+    true if of_age? || @parent_permission
+  end
 end
