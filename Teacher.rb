@@ -9,4 +9,8 @@ class Teacher < Person
     @specialization = specialization
   end
 
+  # Override can_use_services to always return true for teachers
+  def can_use_services?
+    true
+  end
 end
