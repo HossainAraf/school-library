@@ -5,6 +5,7 @@ class Person < Nameable
   attr_reader :id
 
   def initialize(age, name = 'Unknown', parent_permission: true)
+    super()
     @id = Random.rand(1..1000)
     @age = age
     @name = name
@@ -16,7 +17,7 @@ class Person < Nameable
     true if of_age? || @parent_permission
   end
 
-  # Add method correct_name which returns name attribute 
+  # Add method correct_name which returns name attribute
   def correct_name
     @name
   end
