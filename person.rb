@@ -16,6 +16,11 @@ class Person < Nameable
     true if of_age? || @parent_permission
   end
 
+  # Add method correct_name which returns name attribute 
+  def correct_name
+    @name
+  end
+
   # Private method to check age
   private
 
