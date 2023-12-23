@@ -10,3 +10,10 @@ require_relative 'teacher'
 class App
   # Create getters and setters for books, people, and rentals
   attr_accessor :books, :people, :rentals
+
+  # Initialize the App class with empty arrays for books, people, and rentals
+  def initialize
+    @books = []
+    @rentals = []
+    @people = []
+  end
