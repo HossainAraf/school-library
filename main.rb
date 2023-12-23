@@ -11,3 +11,13 @@ def show_options
   puts '6 - List all rentals for a given person id'
   puts '7 - Exit'
 end
+
+# Main loop for user interaction
+def prompt
+  puts 'Welcome to the School Library App!'
+  loop do
+    show_options
+    option = gets.chomp.to_i
+    break if option == 7
+
+    
