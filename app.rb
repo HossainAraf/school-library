@@ -6,4 +6,7 @@ require_relative 'rental'
 require_relative 'student'
 require_relative 'teacher'
 
-
+# Define the main application class
+class App
+  # Create getters and setters for books, people, and rentals
+  attr_accessor :books, :people, :rentals
