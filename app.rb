@@ -58,21 +58,40 @@ end
 
 # Create a student based on user input
 def create_student
-  # User input for student details
-  # ...
+  print 'Age: '
+  age = gets.chomp.to_i
 
-  # Create a new Student object and add it to the people array
-  student = Student.new('Unknown', age, name, parent_permission: true)
+  print 'Name: '
+  name = gets.chomp.to_s
+
+  print 'Has parent permission? [Y / N]: '
+  parent_permission = gets.chomp.to_s
+
+  if parent_permission =~ /^[Yy]/
+    student = Student.new('Unknown', age, name, parent_permission: true)
+  elsif parent_permission =~ /^[Nn]/
+    student = Student.new('Unknown', age, name, parent_permission: false)
+  else
+    puts "Invalid choice. Please enter a valid option. (#{parent_permission})"
+    return
+  end
+
   @people.push(student)
   puts 'Person created successfully'
 end
 
+
 # Create a teacher based on user input
 def create_teacher
-  # User input for teacher details
-  # ...
+  print 'Age: '
+  age = gets.chomp.to_i
 
-  # Create a new Teacher object and add it to the people array
+  print 'Name: '
+  name = gets.chomp.to_s
+
+  print 'Specialization: '
+  specialization = gets.chomp.to_s
+
   teacher = Teacher.new(specialization, age, name)
   @people.push(teacher)
   puts 'Person created successfully'
