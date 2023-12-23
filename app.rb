@@ -99,13 +99,16 @@ end
 
 # Create a book based on user input
 def create_book
-  # User input for book details
-  # ...
+  print 'Title: '
+  title = gets.chomp.to_s
 
-  # Create a new Book object and add it to the books array
+  print 'Author: '
+  author = gets.chomp.to_s
+
   @books.push(Book.new(title, author))
   puts 'Book created successfully'
 end
+
 
 # Create a rental based on user input
 def create_rental
