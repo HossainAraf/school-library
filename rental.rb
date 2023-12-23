@@ -8,5 +8,4 @@ class Rental
     book.rentels << self
     person.rentels << self
   end
-  
 end
