@@ -77,3 +77,13 @@ def create_teacher
   @people.push(teacher)
   puts 'Person created successfully'
 end
+
+# Create a book based on user input
+def create_book
+  # User input for book details
+  # ...
+
+  # Create a new Book object and add it to the books array
+  @books.push(Book.new(title, author))
+  puts 'Book created successfully'
+end
