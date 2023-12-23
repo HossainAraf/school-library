@@ -87,3 +87,13 @@ def create_book
   @books.push(Book.new(title, author))
   puts 'Book created successfully'
 end
+
+# Create a rental based on user input
+def create_rental
+  # User input for rental details
+  # ...
+
+  # Create a new Rental object and add it to the rentals array
+  @rentals.push(Rental.new(date, book, person))
+  puts 'Rental created successfully'
+end
