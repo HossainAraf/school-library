@@ -55,3 +55,14 @@ class App
     puts "Invalid choice. Please enter a valid option. (#{student_or_teacher})"
   end
 end
+
+# Create a student based on user input
+def create_student
+  # User input for student details
+  # ...
+
+  # Create a new Student object and add it to the people array
+  student = Student.new('Unknown', age, name, parent_permission: true)
+  @people.push(student)
+  puts 'Person created successfully'
+end
