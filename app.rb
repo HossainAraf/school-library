@@ -27,3 +27,18 @@ class App
     def list_books_with_index
       @books.each_with_index { |book, i| puts "#{i}) Title: \"#{book.title}\", Author: #{book.author}" }
     end
+
+    # List all people in the people array
+  def list_people
+    @people.each do |person|
+      puts "[#{person.class.name}] Name: \"#{person.name}\", ID: #{person.id}, Age: #{person.age}"
+    end
+  end
+
+  # List all people with their indices
+  def list_people_with_index
+    @people.each_with_index do |person, i|
+      puts "#{i}) [#{person.class.name}] Name: \"#{person.name}\", ID: #{person.id}, Age: #{person.age}"
+    end
+  end
+
