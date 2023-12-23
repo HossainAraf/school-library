@@ -42,3 +42,14 @@ def call_option(option)
     list_rentals
   end
 end
+
+# Main entry point of the program
+def main
+  # Create an instance of the App class
+  app = App.new
+  # Run the main logic of the App
+  app.run
+end
+
+# Call the main method to start the program
+main
