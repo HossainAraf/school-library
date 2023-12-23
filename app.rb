@@ -22,3 +22,8 @@ class App
   def list_books
     @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
   end
+
+    # List all books with their indices
+    def list_books_with_index
+      @books.each_with_index { |book, i| puts "#{i}) Title: \"#{book.title}\", Author: #{book.author}" }
+    end
