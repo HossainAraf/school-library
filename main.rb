@@ -20,4 +20,25 @@ def prompt
     option = gets.chomp.to_i
     break if option == 7
 
-    
+    # Call the appropriate method based on the user's choice
+    call_option(option)
+  end
+end
+
+# Call the corresponding method based on the user's choice
+def call_option(option)
+  case option
+  when 1
+    list_books
+  when 2
+    list_people
+  when 3
+    create_person
+  when 4
+    create_book
+  when 5
+    create_rental
+  when 6
+    list_rentals
+  end
+end
