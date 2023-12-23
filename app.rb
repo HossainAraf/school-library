@@ -17,3 +17,8 @@ class App
     @rentals = []
     @people = []
   end
+
+  # List all books in the books array
+  def list_books
+    @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
+  end
