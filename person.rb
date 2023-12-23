@@ -1,4 +1,5 @@
 require_relative 'nameable'
+require_relative 'rental'
 
 class Person < Nameable
   attr_accessor :name, :age
@@ -20,6 +21,11 @@ class Person < Nameable
   # Add method correct_name which returns name attribute
   def correct_name
     @name
+  end
+
+  # Implement relationship between person and rental
+  def add_rental(book, date)
+    Rental.new(date, self, book)
   end
 
   # Private method to check age
