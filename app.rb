@@ -112,10 +112,42 @@ end
 
 # Create a rental based on user input
 def create_rental
-  # User input for rental details
-  # ...
-
-  # Create a new Rental object and add it to the rentals array
+  puts 'Select a book from the following list by number'
+  list_books_with_index
+  book_index = gets.chomp.to_i
+  unless (0...@books.length).include?(book_index)
+    puts "Error adding a record. Book #{book_index} doesn't exist"
+    return
+  end
+  book = @books[book_index]
+  puts "\nSelect a person from the following list by number (not id)"
+  list_people_with_index
+  person_index = gets.chomp.to_i
+  unless (0...@people.length).include?(person_index)
+    puts "Error adding a record. Person #{person_index} doesn't exist"
+    return
+  end
+  person = @people[person_index]
+  print 'Date: '
+  date = gets.chomp.to_s
   @rentals.push(Rental.new(date, book, person))
   puts 'Rental created successfully'
+end
+
+
+def list_rentals
+  print 'ID of person: '
+  id = gets.chomp.to_i
+  selected = @rentals.find_all { |rental| rental.person.id == id }
+  if selected.empty?
+    puts "Person with given id #{id} does not exist"
+    return
+  end
+  puts 'Rentals:'
+  selected.map { |rental| puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}" }
+end
+
+# Main entry point of the application
+def run
+  prompt
 end
