@@ -96,6 +96,11 @@ Must-Install-Project-with-the-Following-Programmes:
 - LinkedIn: [https://www.linkedin.com/in/md-arafat-hossain-111403275/]
 
 
+##Future feature:
+- Add more funtionality
+- Update styling
+- Upgrade efficiency 
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🤝 Contributing <a name="contributing"></a>
