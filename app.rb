@@ -66,3 +66,14 @@ def create_student
   @people.push(student)
   puts 'Person created successfully'
 end
+
+# Create a teacher based on user input
+def create_teacher
+  # User input for teacher details
+  # ...
+
+  # Create a new Teacher object and add it to the people array
+  teacher = Teacher.new(specialization, age, name)
+  @people.push(teacher)
+  puts 'Person created successfully'
+end
