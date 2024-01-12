@@ -1,151 +1,175 @@
-# Import necessary classes
 require_relative 'book'
-require_relative 'classroom'
 require_relative 'person'
 require_relative 'rental'
 require_relative 'student'
 require_relative 'teacher'
 
-# Define the main application class
 class App
-  # Create getters and setters for books, people, and rentals
-  attr_accessor :books, :people, :rentals
+  OPTIONS = {
+    '1' => :book_lists,
+    '2' => :people_lists,
+    '3' => :create_person,
+    '4' => :create_book,
+    '5' => :create_rental,
+    '6' => :list_all_rentals,
+    '7' => :exit_app
+  }.freeze
 
-  # Initialize the App class with empty arrays for books, people, and rentals
   def initialize
     @books = []
     @rentals = []
     @people = []
   end
 
-  # List all books in the books array
-  def list_books
-    @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
+  def start
+    loop { choose_option }
   end
 
-  # List all books with their indices
-  def list_books_with_index
-    @books.each_with_index { |book, i| puts "#{i}) Title: \"#{book.title}\", Author: #{book.author}" }
-  end
-
-  # List all people in the people array
-  def list_people
-    @people.each do |person|
-      puts "[#{person.class.name}] Name: \"#{person.name}\", ID: #{person.id}, Age: #{person.age}"
+  def book_lists
+    if @books.empty?
+      puts 'Book list is empty. Try again'
+    else
+      puts "There are #{@books.length} books in the list:"
+      @books.each_with_index do |book, index|
+        puts "#{index}) #{book.title} by #{book.author}"
+      end
     end
   end
 
-  # List all people with their indices
-  def list_people_with_index
-    @people.each_with_index do |person, i|
-      puts "#{i}) [#{person.class.name}] Name: \"#{person.name}\", ID: #{person.id}, Age: #{person.age}"
+  def people_lists
+    if @people.empty?
+      puts 'People list is empty. Please try again and add people.'
+    else
+      @people.each_with_index do |person, index|
+        puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      end
     end
   end
 
-  # Create a person (either a student or a teacher) based on user input
   def create_person
-    print 'Do you want to create a student (1) or a teacher (2)? [input the number]: '
-    student_or_teacher = gets.chomp.to_i
-    case student_or_teacher
-    when 1
-      create_student
-    when 2
-      create_teacher
+    puts 'Please enter [1] to create a student or [2] to create a teacher. [Input the number]: '
+    choice = gets.chomp
+    puts 'Name: '
+    name = gets.chomp
+    puts 'Age: '
+    age = gets.chomp.to_i
+
+    case choice
+    when '1'
+      create_student(name, age)
+
+    when '2'
+      create_teacher(name, age)
+
     else
-      puts "Invalid choice. Please enter a valid option. (#{student_or_teacher})"
+      puts 'Invalid choice. Please try again'
     end
   end
 
-  # Create a student based on user input
-  def create_student
-    print 'Age: '
-    age = gets.chomp.to_i
-
-    print 'Name: '
-    name = gets.chomp.to_s
-
-    print 'Has parent permission? [Y / N]: '
-    parent_permission = gets.chomp.to_s
-
-    if parent_permission =~ /^[Yy]/
-      student = Student.new('Unknown', age, name, parent_permission: true)
-    elsif parent_permission =~ /^[Nn]/
-      student = Student.new('Unknown', age, name, parent_permission: false)
+  def create_student(name, age)
+    puts 'Grade: '
+    grade = gets.chomp
+    puts 'Parent permission? [Y/N]: '
+    parent_permission = gets.chomp.downcase
+    if parent_permission == 'y'
+      parent_permission = true
     else
-      puts "Invalid choice. Please enter a valid option. (#{parent_permission})"
-      return
+      false
     end
 
-    @people.push(student)
-    puts 'Person created successfully'
+    if name.strip.empty? || age.to_s.strip.empty?
+      puts 'You entered an empty name and age. Please try again'
+    else
+      student = Student.new(grade, age, name: name, parent_permission: parent_permission)
+      @people << student
+      puts "Student created successfully. ID is #{student.id}"
+    end
   end
 
-  # Create a teacher based on user input
-  def create_teacher
-    print 'Age: '
-    age = gets.chomp.to_i
-
-    print 'Name: '
-    name = gets.chomp.to_s
-
-    print 'Specialization: '
-    specialization = gets.chomp.to_s
-
-    teacher = Teacher.new(specialization, age, name)
-    @people.push(teacher)
-    puts 'Person created successfully'
+  def create_teacher(name, age)
+    puts 'Specialization: '
+    specialization = gets.chomp
+    teacher = Teacher.new(age, specialization, name: name)
+    @people << teacher
+    puts "Teacher created successfully. ID is #{teacher.id}"
   end
 
-  # Create a book based on user input
   def create_book
-    print 'Title: '
-    title = gets.chomp.to_s
+    puts 'Title: '
+    title = gets.chomp
+    puts 'Author: '
+    author = gets.chomp
 
-    print 'Author: '
-    author = gets.chomp.to_s
-
-    @books.push(Book.new(title, author))
-    puts 'Book created successfully'
+    if title.strip.empty? || author.strip.empty?
+      puts 'Please enter the book title and author.'
+    else
+      book = Book.new(title, author)
+      @books << book
+      puts 'Book created successfully.'
+    end
   end
 
-  # Create a rental based on user input
   def create_rental
-    puts 'Select a book from the following list by number'
-    list_books_with_index
-    book_index = gets.chomp.to_i
-    unless (0...@books.length).include?(book_index)
-      puts "Error adding a record. Book #{book_index} doesn't exist"
-      return
+    if @books.empty? || @people.empty?
+      puts 'Library is empty.'
+    else
+      puts 'Select the number of the book from the following list'
+      book_lists
+      book_number = gets.chomp.to_i
+      puts 'Select an ID from the following list'
+      people_lists
+      person_id = gets.chomp.to_i
+
+      person_to_rent = @people.find { |person| person.id == person_id }
+
+      puts 'Enter the date [yyyy-mm-dd]: '
+      date = gets.chomp.to_s
+
+      if person_to_rent
+        rental = Rental.new(date, @books[book_number], person_to_rent)
+        @rentals << rental
+        puts 'Book rented successfully.'
+      else
+        "Person with ID #{person_id} not found."
+      end
     end
-    book = @books[book_index]
-    puts "\nSelect a person from the following list by number (not id)"
-    list_people_with_index
-    person_index = gets.chomp.to_i
-    unless (0...@people.length).include?(person_index)
-      puts "Error adding a record. Person #{person_index} doesn't exist"
-      return
-    end
-    person = @people[person_index]
-    print 'Date: '
-    date = gets.chomp.to_s
-    @rentals.push(Rental.new(date, book, person))
-    puts 'Rental created successfully'
   end
 
-  def list_rentals
-    print 'ID of person: '
-    id = gets.chomp.to_i
-    selected = @rentals.find_all { |rental| rental.person.id == id }
-    if selected.empty?
-      puts "Person with given id #{id} does not exist"
-      return
+  def list_all_rentals
+    if @rentals.empty?
+      puts 'No rentals at the moment.'
+    else
+      puts 'To view rentals, enter your ID: '
+      id = gets.chomp.to_i
+      rental = @rentals.select { |rent| rent.person.id == id }
+
+      if rental.empty?
+        puts 'No record for that ID.'
+      else
+        puts 'Here is your record:'
+        puts ''
+        rental.each_with_index do |record, _index|
+          puts "Date: #{record.date}, Book: #{record.book.title} by #{record.book.author}"
+        end
+      end
     end
-    puts 'Rentals:'
-    selected.map { |rental| puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}" }
   end
 
-  # Main entry point of the application
-  def run
-    prompt
+  def choose_option
+    puts 'Please choose an option by selecting a number:'
+    OPTIONS.each { |key, value| puts "#{key}. #{value.to_s.tr('_', ' ')}" }
+
+    option = gets.chomp
+
+    if OPTIONS.include?(option)
+      send(OPTIONS[option])
+    else
+      puts 'Invalid input. Try again.'
+    end
+  end
+
+  def exit_app
+    puts 'Thank you for using the app.'
+    exit!
   end
 end
