@@ -1,12 +1,16 @@
-class Person
-  attr_accessor :name, :age
-  attr_reader :id
+require_relative 'nameable'
 
-  def initialize(age, name = 'Unknown', parent_permission: true)
-    @id = Randaom.rand(1..1000)
-    @age = age
+class Person < Nameable
+  attr_accessor :classroom
+  attr_reader :id, :name, :age, :rentals
+
+  def initialize(age, name: 'Unknown', parent_permission: true)
+    super()
+    @id = Random.rand(1..1000)
     @name = name
+    @age = age
     @parent_permission = parent_permission
+    @rentals = []
   end
 
   # Public method for if person is of age or if they have permission from parents
@@ -14,10 +18,20 @@ class Person
     true if of_age? || @parent_permission
   end
 
+  # Add method correct_name which returns name attribute
+  def correct_name
+    @name
+  end
+
+  # Implement relationship between person and rental
+  def add_rental(book, date)
+    Rental.new(date, self, book)
+  end
+
   # Private method to check age
   private
 
   def of_age?
-    true if @age >= 18
+    @age >= 18
   end
 end
